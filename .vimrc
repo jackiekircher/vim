@@ -8,7 +8,7 @@ syntax on
 set encoding=utf-8
 
 " Whitespace stuff
-set nowrap
+set wrap
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
@@ -94,17 +94,24 @@ set modeline
 set modelines=10
 
 " Default color scheme
-color desert
+color zenburn
+let g:zenburn_high_Contrast = 1
 
 " Directories for swp files
 set backupdir=~/.vim/backup
 set directory=~/.vim/backup
 
-" Turn off jslint errors by default
-let g:JSLintHighlightErrorLine = 0
+" Turn on jslint when saving files
+let jshint2_save = 1
 
 " MacVIM shift+arrow-keys behavior (required in .vimrc)
 let macvim_hig_shift_movement = 1
+
+" remap movement keys to ignore linewraps
+noremap  <buffer> <silent> k gk
+noremap  <buffer> <silent> j gj
+noremap  <buffer> <silent> 0 g0
+noremap  <buffer> <silent> $ g$
 
 " Include user's local vim config
 if filereadable(expand("~/.vimrc.local"))

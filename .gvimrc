@@ -39,9 +39,6 @@ endif
 " Start without the toolbar
 set guioptions-=T
 
-" Default gui color scheme
-color ir_black
-
 " Utility functions to create file commands
 function s:CommandCabbr(abbreviation, expansion)
   execute 'cabbrev ' . a:abbreviation . ' <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "' . a:expansion . '" : "' . a:abbreviation . '"<CR>'
@@ -61,6 +58,14 @@ function s:DefineCommand(name, destination)
   call s:FileCommand(a:destination)
   call s:CommandCabbr(a:name, a:destination)
 endfunction
+
+set guifont=Menlo\ Regular:h16
+
+" remap movement keys to ignore linewraps
+noremap  <buffer> <silent> k gk
+noremap  <buffer> <silent> j gj
+noremap  <buffer> <silent> 0 g0
+noremap  <buffer> <silent> $ g$
 
 " Include user's local vim config
 if filereadable(expand("~/.gvimrc.local"))
