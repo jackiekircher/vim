@@ -1,119 +1,113 @@
 set nocompatible
 
-set number
-set ruler
-syntax on
+" general config
+"----------------
 
-" Set encoding
-set encoding=utf-8
+  filetype plugin indent on             " load plugin and indent settings based on filetype
+  syntax   on                           " syntax highlighting yes please
 
-" Whitespace stuff
-set wrap
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set expandtab
-set list listchars=tab:\ \ ,trail:·
-set diffopt+=iwhite
-nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+  set encoding=utf-8
+  set number                            " enable line numbers
+  set ruler                             " show cursor position information in bottom-left
+  set backspace=indent,eol,start        " allow backspacing over everything in insert mode
 
-" Searching
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
+  " whitespace
+  set tabstop=2                         " display tabs as 2 spaces
+  set expandtab                         " change tab input to spaces
+  set softtabstop=2                     " expandtab width in insert mode
+  set shiftwidth=2                      " shift operators (<< >>) move line 2 spaces
+  set list listchars=tab:\ \ ,trail:·   " display · in place of whitespace
+  set diffopt+=iwhite                   " ignore trailing whitespace in diffs
 
-" Status bar
-set laststatus=2
+  " search
+  set hlsearch                          " highlight search results
+  set ignorecase                        " make search case insensitive
+  set smartcase                         " make search case sensitive when using non-lowercase queries
 
-" ZoomWin configuration
-map <Leader><Leader> :ZoomWin<CR>
+  " status bar
+  set laststatus=2                      " always show status bar
 
-" CTags
-map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
+  " directories for swp files
+  set backupdir=~/.vim/backup
+  set directory=~/.vim/backup
 
-" Remember last location in file
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal g'\"" | endif
-endif
+  " color schemin'
+  color  zenburn
+  let g:zenburn_high_Contrast = 1
 
-function s:setupWrapping()
-  set wrap
-  set wm=2
-  set textwidth=72
-endfunction
 
-function s:setupMarkup()
-  call s:setupWrapping()
-  map <buffer> <Leader>p :Mm <CR>
-endfunction
+" plugin config
+"---------------
 
-" make uses real tabs
-au FileType make                                     set noexpandtab
+  " Syntastic syntax checking
+  "   checks code syntax on file save and displays warnings
+  let g:syntastic_enable_signs=1
+  let g:syntastic_quiet_warnings=1
 
-" Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
-au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
+  " JSHint2
+  "   turn on when saving files
+  let jshint2_save = 1
 
-" md, markdown, and mk are markdown and define buffer-local preview
-au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupMarkup()
 
-au BufRead,BufNewFile *.txt call s:setupWrapping()
+" autocommands
+"---------------------
 
-" make python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
-au FileType python  set tabstop=4 textwidth=79
+  " automatically wrap .txt files to 72 columns wide
+  function s:setupWrapping()
+    set wrap
+    set textwidth=72
+  endfunction
+  au BufRead,BufNewFile *.txt call s:setupWrapping()
 
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
+  " enable buffer preview for markdown files with <Leader>p
+  function s:setupMarkup()
+    call s:setupWrapping()
+    map <buffer> <Leader>p :Mm <CR>
+  endfunction
+  au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupMarkup()
 
-" load the plugin and indent settings for the detected filetype
-filetype plugin indent on
+  " makefiles use real tabs
+  au FileType make set noexpandtab
 
-" Opens an edit command with the path of the currently edited file filled in
-" Normal mode: <Leader>e
-map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+  " python files follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
+  au FileType python  set tabstop=4 textwidth=79
 
-" Opens a tab edit command with the path of the currently edited file filled in
-" Normal mode: <Leader>t
-map <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+  " Thorfile, Rakefile, Vagrantfile and Gemfile are ruby files
+  au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru} set ft=ruby
 
-" Unimpaired configuration
-" Bubble single lines
-nmap <C-Up> [e
-nmap <C-Down> ]e
-" Bubble multiple lines
-vmap <C-Up> [egv
-vmap <C-Down> ]egv
+  " highlight all characters past 72 columns
+  "augroup highlight_overflow
+  "  autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
+  "  autocmd BufEnter * match OverLength /\%72v.*/
+  "augroup END
 
-" Enable syntastic syntax checking
-let g:syntastic_enable_signs=1
-let g:syntastic_quiet_warnings=1
 
-" Use modeline overrides
-set modeline
-set modelines=10
+" key mappings
+"--------------
 
-" Default color scheme
-color zenburn
-let g:zenburn_high_Contrast = 1
+  " remove all trailing whitespace by hitting <F5>
+  nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
-" Directories for swp files
-set backupdir=~/.vim/backup
-set directory=~/.vim/backup
+  " Opens an edit command with the path of the currently edited file filled in
+  map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 
-" Turn on jslint when saving files
-let jshint2_save = 1
+  " remap movement keys to ignore linewraps
+  noremap <silent> k gk
+  noremap <silent> j gj
+  noremap <silent> 0 g0
+  noremap <silent> $ g$
 
-" MacVIM shift+arrow-keys behavior (required in .vimrc)
-let macvim_hig_shift_movement = 1
 
-" remap movement keys to ignore linewraps
-noremap  <buffer> <silent> k gk
-noremap  <buffer> <silent> j gj
-noremap  <buffer> <silent> 0 g0
-noremap  <buffer> <silent> $ g$
+" etc.
+"---------------
 
-" Include user's local vim config
-if filereadable(expand("~/.vimrc.local"))
-  source ~/.vimrc.local
-endif
+  " Remember last location in file
+  if has("autocmd")
+    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+      \| exe "normal g'\"" | endif
+  endif
+
+  " Include user's local vim config
+  if filereadable(expand("~/.vimrc.local"))
+    source ~/.vimrc.local
+  endif
