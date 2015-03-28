@@ -48,10 +48,6 @@ execute pathogen#infect()
   let g:syntastic_enable_signs=1
   let g:syntastic_quiet_messages={'level': 'warnings'}
 
-  " JSHint2
-  "   turn on when saving files
-  let jshint2_save = 1
-
 
 " autocommands
 "---------------------
