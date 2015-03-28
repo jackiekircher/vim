@@ -1,4 +1,5 @@
 set nocompatible
+execute pathogen#infect()
 
 " general config
 "----------------
@@ -52,19 +53,13 @@ set nocompatible
 " autocommands
 "---------------------
 
-  " automatically wrap .txt files to 72 columns wide
+  " automatically wrap .txt and markdown files to 72 columns wide
   function s:setupWrapping()
     set wrap
     set textwidth=72
   endfunction
   au BufRead,BufNewFile *.txt call s:setupWrapping()
-
-  " enable buffer preview for markdown files with <Leader>p
-  function s:setupMarkup()
-    call s:setupWrapping()
-    map <buffer> <Leader>p :Mm <CR>
-  endfunction
-  au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupMarkup()
+  au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupWrapping()
 
   " makefiles use real tabs
   au FileType make set noexpandtab
