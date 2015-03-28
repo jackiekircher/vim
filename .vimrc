@@ -42,8 +42,11 @@ execute pathogen#infect()
 
   " Syntastic syntax checking
   "   checks code syntax on file save and displays warnings
+  set statusline+=%#warningmsg#
+  set statusline+=%{SyntasticStatuslineFlag()}
+  set statusline+=%*
   let g:syntastic_enable_signs=1
-  let g:syntastic_quiet_warnings=1
+  let g:syntastic_quiet_messages={'level': 'warnings'}
 
   " JSHint2
   "   turn on when saving files
