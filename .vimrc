@@ -48,6 +48,10 @@ execute pathogen#infect()
   let g:syntastic_enable_signs=1
   let g:syntastic_quiet_messages={'level': 'warnings'}
 
+  " airline
+  "   makes the status line prettier
+  let g:airline_powerline_fonts = 1
+
 
 " autocommands
 "---------------------

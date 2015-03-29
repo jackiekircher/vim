@@ -2,7 +2,7 @@
 "----------------
 
   set guioptions-=T  " start without the toolbar
-  set guifont=Menlo\ Regular:h16
+  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h15
 
 
 " macvim
