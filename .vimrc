@@ -51,6 +51,7 @@ execute pathogen#infect()
   " airline
   "   makes the status line prettier
   let g:airline_powerline_fonts = 1
+  let g:airline_extensions = ['branch', 'syntastic']
 
 
 " autocommands
