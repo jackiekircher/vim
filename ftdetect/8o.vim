@@ -1,1 +1,1 @@
-autocmd BufNewFile,BufRead *.8o setf 8o
+autocmd BufNewFile,BufRead *.{8o,ch8} setf 8o
