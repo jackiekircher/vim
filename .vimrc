@@ -33,8 +33,9 @@ execute pathogen#infect()
   set directory=~/.vim/backup
 
   " color schemin'
-  color  zenburn
-  let g:zenburn_high_Contrast = 1
+  let g:hybrid_use_Xresources = 1
+  set t_Co=256
+  color dracula
 
 
 " plugin config
