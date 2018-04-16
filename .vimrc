@@ -37,6 +37,9 @@ execute pathogen#infect()
   set t_Co=256
   color dracula
 
+  " mouse
+  set mouse=a
+
 
 " plugin config
 "---------------
