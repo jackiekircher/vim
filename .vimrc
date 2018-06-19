@@ -100,6 +100,16 @@ execute pathogen#infect()
   noremap <silent> 0 g0
   noremap <silent> $ g$
 
+  " tab keyboard commands/navigation
+  nnoremap t{       :tabfirst<CR>
+  nnoremap t]       :tabnext<CR>
+  nnoremap t[       :tabprev<CR>
+  nnoremap t}       :tablast<CR>
+  nnoremap tt       :tabedit<Space>
+  nnoremap tm       :tabm<Space>
+  nnoremap td       :tabclose<CR>
+  nnoremap tn       :tabnew<CR>
+
 
 " etc.
 "---------------
