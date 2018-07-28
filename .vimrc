@@ -34,8 +34,9 @@ execute pathogen#infect()
 
   " color schemin'
   let g:hybrid_use_Xresources = 1
-  set t_Co=256
-  color dracula
+  let g:dracula_italic = 0
+  colorscheme dracula
+  highlight Normal ctermbg=None
 
   " mouse
   set mouse=a
@@ -54,7 +55,7 @@ execute pathogen#infect()
 
   " airline
   "   makes the status line prettier
-  let g:airline_powerline_fonts = 1
+  let g:airline_powerline_fonts = 0
   let g:airline_extensions = ['branch', 'syntastic']
 
 
